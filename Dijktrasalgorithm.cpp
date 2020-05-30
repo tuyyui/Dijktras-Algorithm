@@ -4,7 +4,7 @@
 #include <utility>
 #include <set>
 ///Infinity
-#define INF 1000000
+
 using namespace std;
 class Graph{
 private:
