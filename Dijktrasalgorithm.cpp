@@ -1,17 +1,20 @@
-#include <iostream>
-#include <list>
+#include <fstream>
+#include <ctime> 
+#include <iostream> 
 #include <vector>
-#include <utility>
+#include <iterator>
 #include <set>
-///Infinity
+#include <list>
+#include <utility>
+#define INF 10000
 
 using namespace std;
-class Graph{
+class Graph {
 private:
     //Vertices
     int V;
     //Pointer to list.
-    list<pair<int, int> > *adj;
+    list<pair<int, int> >* adj;
 public:
     // Constructor Prototype
     Graph(int v);
@@ -21,49 +24,49 @@ public:
     void shortestPath(int s);
 
 };
-Graph::Graph(int v){
-V = v;
+Graph::Graph(int v) {
+    V = v;
 
- adj = new list<pair<int, int> >[v];
+    adj = new list<pair<int, int> >[v];
 }
-void Graph::addEdge(int v1, int v2, int weight){
-adj[v1].push_back(make_pair(v2, weight));
+void Graph::addEdge(int v1, int v2, int weight) {
+    adj[v1].push_back(make_pair(v2, weight));
 }
 
-void Graph::shortestPath(int s){
-// Create vertices
+void Graph::shortestPath(int s) {
+    // Create vertices
 
-set <pair <int, int> > extract_set;
+    set <pair <int, int> > extract_set;
 
-std::vector<int> distances(V, INF);
+    std::vector<int> distances(V, INF);
 
-///INITALIZE DISTANCE TO 0
-   extract_set.insert(make_pair(0, s));
-   distances[s] = 0;
-   while(!extract_set.empty()){
-    pair <int, int> tmp = *(extract_set.begin());
-    extract_set.erase(extract_set.begin());
+    ///INITALIZE DISTANCE TO 0
+    extract_set.insert(make_pair(0, s));
+    distances[s] = 0;
+    while (!extract_set.empty()) {
+        pair <int, int> tmp = *(extract_set.begin());
+        extract_set.erase(extract_set.begin());
 
-    int u = tmp.second;
-     list<pair <int, int> >::iterator i;
-      for( i = adj[u].begin(); i != adj[u].end(); i++){
-        int v = (*i).first;
-        int weight = (*i).second;
-       int q = distances[u] + weight;
-          ///SHORTEST PATH
-           if(distances[v] > q){
-               if(distances[v] != INF){
-                extract_set.erase(extract_set.find(make_pair(distances[v], v)));
-               }
-               distances[v] = distances[u] + weight;
-               extract_set.insert(make_pair(distances[v], v));
-           }
-      }
-   }
-   std::cout << "Minimum distances from vertex: " << s << std::endl;
-   for(int i = 0; i < V; i++){
-    std::cout << "Vertex: " << i << "\tDistance: " << distances[i] << std::endl;
-   }
+        int u = tmp.second;
+        list<pair <int, int> >::iterator i;
+        for (i = adj[u].begin(); i != adj[u].end(); i++) {
+            int v = (*i).first;
+            int weight = (*i).second;
+            int q = distances[u] + weight;
+            ///SHORTEST PATH
+            if (distances[v] > q) {
+                if (distances[v] != INF) {
+                    extract_set.erase(extract_set.find(make_pair(distances[v], v)));
+                }
+                distances[v] = distances[u] + weight;
+                extract_set.insert(make_pair(distances[v], v));
+            }
+        }
+    }
+    std::cout << "Minimum distances from vertex: " << s << std::endl;
+    for (int i = 0; i < V; i++) {
+        std::cout << "Vertex: " << i << "\tDistance: " << distances[i] << std::endl;
+    }
 }
 int main()
 {
@@ -89,6 +92,6 @@ int main()
     g.addEdge(7, 1, 910);
     g.addEdge(7, 2, 610);
 
-        g.shortestPath(6);
+    g.shortestPath(6);
     return 0;
 }
