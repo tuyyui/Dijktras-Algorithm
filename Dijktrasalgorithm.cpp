@@ -6,7 +6,7 @@
 #include <set>
 #include <list>
 #include <utility>
-#define INF 10000
+#define INF 10000-
 
 using namespace std;
 class Graph {
